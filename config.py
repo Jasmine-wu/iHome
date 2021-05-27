@@ -7,8 +7,8 @@ class Config():
     SECRET_KEY='13333xxxxx4444444'
 
     # 数据库
-    SQLALCHEMY_DATABASE_UTL='mysql://root:changsha123@127.0.0.1:8888/ihome_python04'
-    SQLALCHEMY_TRACK_MODIFICATTIONS = True
+    SQLALCHEMY_DATABASE_URI='mysql://root:changsha123@127.0.0.1:8888/ihome_python04'
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 
     # redis
     REDIS_HOST='127.0.0.1'
