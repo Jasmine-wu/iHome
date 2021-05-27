@@ -1,4 +1,5 @@
+from . import api
 
-@app.route("/index")
+@api.route("/index")
 def index():
     return "index page"
