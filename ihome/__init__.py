@@ -5,6 +5,7 @@ import redis
 from flask_session import Session
 from flask_wtf import CSRFProtect
 
+import pymysql
 
 
 # 数据库
@@ -19,6 +20,10 @@ def create_app(config_name):
     :param config_name: 创建app类型的类型名（"develpo","product"）
     :return:
     """
+    # 替换默认的数据驱动MySQLdb为pymysql
+    # MySQLdb支持python2
+    pymysql.install_as_MySQLdb()
+
     app = Flask(__name__)
 
     # 根据映射关系给app配置不同环境的config
