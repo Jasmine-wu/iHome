@@ -6,7 +6,6 @@ from flask_session import Session
 from flask_wtf import CSRFProtect
 
 
-from ihome import api_1_0
 
 # 数据库
 db = SQLAlchemy()
@@ -40,6 +39,7 @@ def create_app(config_name):
     CSRFProtect(app)
 
     # 注册蓝图
+    from ihome import api_1_0
     app.register_blueprint(api_1_0.api, url_prefix='/api/v1.0')
 
     return app
