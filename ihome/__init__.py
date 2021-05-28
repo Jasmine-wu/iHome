@@ -43,7 +43,7 @@ def create_app(config_name):
     # 用flask-sesison将session保存在redis中
     Session(app)
 
-    # 为flask添加csr防护
+    # 为flask添加csr防护(只是添加防护，还未设置csr_token值)
     CSRFProtect(app)
 
     # 为flask添加自定义的正则转换器rex
