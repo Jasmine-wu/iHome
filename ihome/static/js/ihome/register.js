@@ -4,9 +4,10 @@ function getCookie(name) {
     return r ? r[1] : undefined;
 }
 
-// 保存图片验证码编号
+// 将图片验证码编号设置为全局变量
 var imageCodeId = "";
 
+// 生成唯一图片验证码唯一编号
 function generateUUID() {
     var d = new Date().getTime();
     if(window.performance && typeof window.performance.now === "function"){
@@ -22,11 +23,15 @@ function generateUUID() {
 
 function generateImageCode() {
     // 形成图片验证码的后端地址， 设置到页面中，让浏览请求验证码图片
-    // 1. 生成图片验证码编号
-    imageCodeId = generateUUID();
-    // 是指图片url
+    // 1. 生成图片验证码编号：
+        // - 时间戳： 有可能两个人同时间生成验证码,id重复
+        // - UUID ： 全局唯一标识符：无论怎么生成，每个人生成的都唯一
+    // imageCodeId 是局部变量，出了函数就释放掉了，因此要写成全局的
+    var imageCodeId = generateUUID();
+    // 2. 图片url
     var url = "/api/v1.0/image_codes/" + imageCodeId;
-    $(".image-code img").attr("src", url);
+    // 3. 设置src属性值为url
+    $(".image-code.img").attr("src", url);
 }
 
 function sendSMSCode() {
@@ -77,7 +82,7 @@ function sendSMSCode() {
         }
     });
 }
-
+//页面一加载好，就生成验证码
 $(document).ready(function() {
     generateImageCode();
     $("#mobile").focus(function(){
