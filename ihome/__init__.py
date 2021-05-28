@@ -1,9 +1,11 @@
+# coding:utf-8
 from flask import Flask
 from config import config_map
 from flask_sqlalchemy import SQLAlchemy
 import redis
 from flask_session import Session
 from flask_wtf import CSRFProtect
+from ihome.ultils.commons import ReConverter
 
 import pymysql
 
@@ -24,6 +26,7 @@ def create_app(config_name):
     # MySQLdb支持python2
     pymysql.install_as_MySQLdb()
 
+    # static_url_path='/static' ,static_folder='static'默认
     app = Flask(__name__)
 
     # 根据映射关系给app配置不同环境的config
@@ -43,9 +46,16 @@ def create_app(config_name):
     # 为flask添加csr防护
     CSRFProtect(app)
 
+    # 为flask添加自定义的正则转换器rex
+    app.url_map.converters['rex'] = ReConverter
+
+
     # 注册蓝图
     from ihome import api_1_0
     app.register_blueprint(api_1_0.api, url_prefix='/api/v1.0')
+
+    from ihome import web_html
+    app.register_blueprint(web_html.html)
 
     return app
 
